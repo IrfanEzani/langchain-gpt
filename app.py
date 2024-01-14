@@ -35,13 +35,22 @@ script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_his
 
 # Llms
 llm = OpenAI(temperature=0.9) 
+#create chain for title template 
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
 script_chain = LLMChain(llm=llm, prompt=script_template, verbose=True, output_key='script', memory=script_memory)
+
+# simple sequential chain only outputs the last output on the chain.
+# sequential_chain = SimpleSequentialChain(chains = [title_chain, script_chain], verbose=True)
+
+# sequential chain fixes the issue.
+# sequential_chain = SequentialChain(chains = [title_chain, script_chain], input_variables=['topic'], output_variables=['title, script'], verbose=True)    
+
 
 wiki = WikipediaAPIWrapper()
 
 # Show stuff to the screen if there's a prompt
 if prompt: 
+    # response = sequantial_chain.run(topic=prompt)
     title = title_chain.run(prompt)
     wiki_research = wiki.run(prompt) 
     script = script_chain.run(title=title, wikipedia_research=wiki_research)
@@ -49,6 +58,7 @@ if prompt:
     st.write(title) 
     st.write(script) 
 
+# insert chat history
     with st.expander('Title History'): 
         st.info(title_memory.buffer)
 
