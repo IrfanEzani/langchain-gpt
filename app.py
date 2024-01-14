@@ -2,20 +2,22 @@
 import os 
 from apikey import apikey 
 
+# application framework
 import streamlit as st 
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, SequentialChain 
 from langchain.memory import ConversationBufferMemory
-from langchain.utilities import WikipediaAPIWrapper 
+from langchain_community.utilities import WikipediaAPIWrapper 
 
 os.environ['OPENAI_API_KEY'] = apikey
 
 # App framework
-st.title('🦜🔗 YouTube GPT Creator')
-prompt = st.text_input('Plug in your prompt here') 
+st.title('ScriptGPT')
+prompt = st.text_input('Enter prompt from your video script here') 
 
-# Prompt templates
+# Prompt template - create new prompt template.
+# the topic will be passed to the template
 title_template = PromptTemplate(
     input_variables = ['topic'], 
     template='write me a youtube video title about {topic}'
