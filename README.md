@@ -1,10 +1,4 @@
-The Python file `app.py` appears to be a script for a web application, likely built using the Streamlit framework. This application integrates various libraries and functionalities, including OpenAI's language models and other utilities such as a Wikipedia API wrapper. The main purpose seems to revolve around processing and responding to user inputs, possibly in the context of generating or manipulating text.
-
-Here's a suggested README structure based on the initial overview of the code:
-
----
-
-# ScriptGPT Application
+# ScriptGPT
 
 ## Description
 
